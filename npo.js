@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         B NPO Main ahkqq
+// @name         add-subtitles-on-NPO-start
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Retrieve NPO caption and add translated subtitles to NPO video
