@@ -3,11 +3,11 @@ Add subtitles to NPO Start
 
 
 ## Tools needed:
-- a userscript manager: I use tampermonkey. It is used to retrieve the Dutch captions and to inject the translated subtitles into the video player
-- a tool to easily translate the subtitles: I use the extension "Subtitle Editor" on Visual Studio Code (which uses Google Translate) because it's really simple to install and use (also it's free).
+- a userscript manager: I use [tampermonkey](https://www.tampermonkey.net/). It is used to retrieve the Dutch captions and to inject the translated subtitles into the video player
+- a tool to easily translate the subtitles: I use the extension [Subtitle Editor](https://github.com/pepri/subtitles-editor) on [Visual Studio Code](https://code.visualstudio.com/) (which uses Google Translate) because it's really simple to install and use (also it's free).
 
 ## Initial set-up: 
-In your userscript manager, save this script
+In your userscript manager, save [this script](https://github.com/Uuvu/add-subtitles-on-NPO-start/blob/main/npo.js)
 
 ## Now that everything is set up, let's watch a new video with translated subtitles!
 1) Open a video on npostart.nl
