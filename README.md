@@ -41,7 +41,7 @@ In your userscript manager, save [this script](https://github.com/Uuvu/add-subti
 
 
 ## For those who want to help, here are some possible improvements and more details:
-- The translation process: it could be integrated (the script from the "Subtitle Editor" can be adapted; it's written in TypeScript). Also, it could use a better API than Google Translate (ex: Bing or DeepL...)
+- The translation process: it could be integrated (the script from the "Subtitle Editor" can be adapted; it's written in TypeScript). Also, it could use a better API than Google Translate (ex: Bing Microsoft Translator or Microsoft Azure or DeepL...)
 - The shortcut on the main page: I couldn't find a way to trigger it when the iframe is on focus
 - How the subtitles are added: NPO use video-js. There are (at least) 2 ways to add the subtitles. One via `<track>` and one via `player.addRemoteTextTrack`. I use `<track>` because I didn't find a way with `player.addRemoteTextTrack` to display simultaneously the Dutch captions and the translated subtitles. The problem with `<track>` is that the subtitles are not added in the settings panel (`player.addRemoteTextTrack` does add them). There is a setting (`layer.textTrackDisplay.allowMultipleShowingTracks`) that should make it work with `player.addRemoteTextTrack` but I wasn't able to figure out how to do it.  The script to add the subtitles with `player.addRemoteTextTrack` is already written but commented in the script.
 - It would be nice if the subtitles were draggable (but is there a way to do that with video-js?)
