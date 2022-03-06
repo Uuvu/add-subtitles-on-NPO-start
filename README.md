@@ -1,1 +1,57 @@
-# add-subtitles-on-NPO-start
+Add subtitles to NPO Start
+
+
+
+## Tools needed:
+- a userscript manager: I use tampermonkey. It is used to retrieve the Dutch captions and to inject the translated subtitles into the video player
+- a tool to easily translate the subtitles: I use the extension "Subtitle Editor" on Visual Studio Code (which uses Google Translate) because it's really simple to install and use (also it's free).
+
+## Initial set-up: 
+In your userscript manager, save this script
+
+## Now that everything is set up, let's watch a new video with translated subtitles!
+1) Open a video on npostart.nl
+2) Click on the button in the top left corner*. This will:
+- open a new page with the same video (this is the real video player, the previous page embeds this player in an iframe) 
+- copy the Dutch captions in your clipboard
+3) Paste the content of the clipboard in a new file in Open Visual Studio Code and translate them with Subtitle Editor, then copy the translated subtitles. 
+4) Go back to the page opened in 2) and paste the subtitles in the text area in the top left corner and press Enter. Now start the video... and enjoy! 
+
+## Some tricks:
+- In step 2), you can also press Alt+L, but this shortcut only works if the focus is on the main page (and not on the video, which is an iframe and not the main page): 
+    - So, either do the shortcut before you click anything on the page 
+    - or if you've already clicked on the video, click on the text description in the top left corner (this will set the focus on the main page) and then press Alt+L (but then, it's easier to simply click on the button!). 
+- Hide/show the translated subtitles with Alt-L (as it is now, you cannot use the player settings to do that because the translated subtitles are not displayed there - more details in "possible improvements" below)
+- If you add the translated subtitles to a video, they will be saved and the next time you open the same video, they will be loaded in the text area automatically. If you don't want to change them (ex into another language), just press Enter
+- If you want to bookmark the video to continue watching it sometimes later, you need to bookmark the page in step 1 (not the player opened in step 2) as the link of the player changes after some time (couple of hours?). 
+- The script also disables the dark overlay when the video is on pause (because it makes it difficult to read the subtitles): if you want to keep it, simply comment on that part in the script
+- The script moves the volume button to the right of the video player: if you want to keep it in its original position, simply comment out that part in the script
+
+
+## Many things are easily customizable by modifying the userscripts [even if you don't know how to code with javascript] (search for ● in the script)
+- The key for the shortcuts 
+- The position, size of the translated subtitles
+- In step 2), instead of retrieving the captions by copying them to the clipboard, you can save a file (the code is already implemented, you just have to uncomment it and comment out the "clipboard" part)
+
+
+## Simple explanations about the process:
+- Why do we have to watch the video on a special page? This special page is the real video player, the main page embeds this player in an iframe. To add the translated subtitles, we need to have direct access to the video player, which (as far as I know) is not possible if the player is in an iframe.
+- Does it work with all videos on NPO? It worked for the dozen or so videos I tested from different programs chosen randomly. As long as the video has captions, it should work. If you find a video with captions for which the script doesn't work, please let me know!
+- The subtitles translated by Google Translate aren't good enough! If you know a better option to translate the subtitles that is free and easy to set up, please share it. 
+
+
+## For those who want to help, here are some possible improvements and more details:
+- The translation process: it could be integrated (the script from the "Subtitle Editor" can be adapted; it's written in TypeScript). Also, it could use a better API than Google Translate (ex: Bing or DeepL...)
+- The shortcut on the main page: I couldn't find a way to trigger it when the iframe is on focus
+- How the subtitles are added: NPO use video-js. There are (at least) 2 ways to add the subtitles. One via `<track>` and one via `player.addRemoteTextTrack`. I use `<track>` because I didn't find a way with `player.addRemoteTextTrack` to display simultaneously the Dutch captions and the translated subtitles. The problem with `<track>` is that the subtitles are not added in the settings panel (`player.addRemoteTextTrack` does add them). There is a setting (`layer.textTrackDisplay.allowMultipleShowingTracks`) that should make it work with `player.addRemoteTextTrack` but I wasn't able to figure out how to do it.  The script to add the subtitles with `player.addRemoteTextTrack` is already written but commented in the script.
+- It would be nice if the subtitles were draggable (but is there a way to do that with video-js?)
+- An easier way to customize the shortcuts, the translated subtitles than to edit the script
+- Turn the script in an extension to simplify the installation process
+- On the player page, when the left and right arrows are pressed, the video is paused (this doesn't happen on the main page: the video continues to play from the new requested time). The error is `Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().` Is there something that can be done to prevent this? 
+- Improve how the subtitles are saved for the next session: Currently the subtitles are saved in local storage and the key is the 1000 first characters of the video's URL. It is not the full URL because the last characters of the URL seem to change every couple of hours. Here is how to URL seems to be composed:
+   - the first 199 characters seem to be the same for all the videos no matter the program.
+   - the next 16 characters seem to be specific to each program
+   - the following 980 are specific to each video
+   - and the remaining characters seem to the specific to each day. 
+I chose to set the key to the first 1000 characters just because it's easy to code and it's working (even though it's not very "clean")
+
