@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         add-subtitles-on-NPO-start
+// @name         B NPO Main ahkqq
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Retrieve NPO caption and add translated subtitles to NPO video
 // @author
 // @match        https://www.npostart.nl/*
 // @match        https://start-player.npo.nl/embed/*
-// @grant        none
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
 window.addEventListener('load', function () {
@@ -31,6 +31,7 @@ window.addEventListener('load', function () {
         document.addEventListener("keydown", function (key) {
           if (key.altKey && key.code === "KeyL") { //  ●  to find the key name : https://keyjs.dev/
             getCaptionAndOpenVideoPayer()
+
           }
         }, true);
       }
@@ -233,6 +234,58 @@ window.addEventListener('load', function () {
 })
 
 
+// // trying to translate directly the subtitles without using VSCode Subtitle Editor
+// function translateSubtitles(text) {
+
+//   // https://github.com/pavladan/subtitles-parser-vtt
+//   var fromVtt = function (data, timeFormat, isYoutubeAutoTranscript) {
+//     var useYoutubeAutoTranscript = isYoutubeAutoTranscript ? true : false;
+//     data = data.replace(/\r/g, "");
+//     var regex = /(\d+)?\n?(\d{2}:\d{2}:\d{2}[,.]\d{3}) --> (\d{2}:\d{2}:\d{2}[,.]\d{3}).*\n/g;
+//     data = data.split(regex);
+//     data.shift();
+//     var items = [];
+//     for (var i = 0; i < data.length; i += 4) {
+//       var text = data[i + 3];
+//       if (useYoutubeAutoTranscript) {
+//         text = text.split("\n");
+//         text.shift();
+//         text = text.join("\n");
+//       }
+//       if (text.trim().length === 0) continue;
+//       items.push({
+//         id: data[i] ? +data[i].trim() : items.length + 1,
+//         startTime: changeTimeFormat(data[i + 1].trim(), timeFormat),
+//         endTime: changeTimeFormat(data[i + 2].trim(), timeFormat),
+//         text: text.trim(),
+//       });
+//     }
+//     return items;
+//   };
+
+//   var datasplit = fromVtt(text, 's');
+//   console.log(datasplit)
+
+//   datasplit.forEach(element => {
+
+//     var textA = element.text
+
+//     urlAss = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" + encodeURIComponent('en') + "&dt=t&q=" + encodeURIComponent(textA)
+
+
+//     fetch(urlAss).then(function (response) {
+//       return response.json();
+//     }).then(function (data) {
+//       console.log("translate", data[0][0][0]);
+//     }).catch(function () {
+//       console.log('Booo');
+//     });
+
+
+//   });
+// }
+
+
 function getCaptionAndOpenVideoPayer() {
 
   // Retrieve the epidoseID and assemble the link of thecaption VTT file
@@ -252,6 +305,11 @@ function getCaptionAndOpenVideoPayer() {
       document.addEventListener("copy", sendTextToClipboard);
       document.execCommand("copy");
       document.removeEventListener("copy", sendTextToClipboard);
+
+      // translateSubtitles(vttContentM)
+      // var translated = translateSubtitles(vttContentM)
+      // console.log(translated)
+
 
       // get the link of the real video player (the main page calls an iframe) and open it
       var urlIframe = document.getElementsByTagName("iframe")[0].src
