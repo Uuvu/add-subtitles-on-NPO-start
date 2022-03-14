@@ -11,11 +11,23 @@ In your userscript manager, save [this script](https://github.com/Uuvu/add-subti
 
 ## Now that everything is set up, let's watch a new video with translated subtitles!
 1) Open a video on npostart.nl
+![1](https://user-images.githubusercontent.com/101060119/158232700-88b0fa05-d418-4d8d-822f-e84474ef4661.png)
+
 2) Click on the button in the top left corner*. This will:
-- open a new page with the same video (this is the real video player, the previous page embeds this player in an iframe) 
 - copy the Dutch captions in your clipboard
-3) Paste the content of the clipboard in a new file in Open Visual Studio Code and translate them with Subtitle Editor, then copy the translated subtitles. 
-4) Go back to the page opened in 2) and paste the subtitles in the text area in the top left corner and press Enter. Now start the video... and enjoy! 
+- open a new page with the same video (this is the real video player, the previous page embeds this player in an iframe) 
+![2](https://user-images.githubusercontent.com/101060119/158232729-ef584d10-84ff-4b7f-a934-43c62b2fa26b.png)
+
+3) Paste the content of the clipboard in a new file in Open Visual Studio Code and translate them with Subtitle Editor (open the command palette: view>command palette, type "sub" and select "Subtitles:Translates", then enter the language you want to translate you subtitles in ex "EN", then press enter), then copy the translated subtitles.
+
+![3](https://user-images.githubusercontent.com/101060119/158232768-2d4fb47f-5a5c-44fb-b40e-42ba1b5dfcb7.png)
+![4](https://user-images.githubusercontent.com/101060119/158232777-87f9c249-cb1a-46fe-a2ab-af65074fa5a7.png)
+
+4) Go back to the page opened in 2) and paste the subtitles in the text area in the top left corner and press Enter.
+![5](https://user-images.githubusercontent.com/101060119/158232795-36662eea-00db-4db1-b31b-24b2ed498225.png)
+
+5) Now start the video... and enjoy! 
+![6](https://user-images.githubusercontent.com/101060119/158232805-5e1b34ea-871c-484c-83e7-d5d2f5579a35.png)
 
 ## Some tricks:
 - In step 2), you can also press Alt+L, but this shortcut only works if the focus is on the main page (and not on the video, which is an iframe and not the main page): 
