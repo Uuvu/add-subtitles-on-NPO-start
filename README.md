@@ -42,8 +42,15 @@ In your userscript manager, save [this script](https://github.com/Uuvu/add-subti
 
 ## Many things are easily customizable by modifying the userscripts [even if you don't know how to code with javascript] (search for ● in the script)
 - The key for the shortcuts 
-- The position, size of the translated subtitles
+- The position: you can change the position of the subtitle by modifying this part in the userscript "line:10% position:20% align:left". I added them in the top left corner so that it takes me some efforts to read the English subtitles. I am thus force to focus on the Dutch subtitles. Be careful, if you use the Dutch subtitles at the same time, as they can hide them. After you save the modifications in the usercript, you need to reload the page. 
+- The size of the translated subtitles
 - In step 2), instead of retrieving the captions by copying them to the clipboard, you can save a file (the code is already implemented, you just have to uncomment it and comment out the "clipboard" part)
+
+
+## Some help if it doesn't work as expected:
+- If the text area doesn't appear on the second player: try to press F5 to reload the page
+- If the translated subtitles are not visible: the problem could come from the format of the translated subtitles, because sometimes when translating the subtitles, the format could be changed and they won't be recognize by the playe (ex: in VSCode, make sure that the Language mode is plain text and not html as html will add many spaces(click on the language mode in the bottom right corner). To debug, try with the original subtitles (the one that are sent in the clipboard). 
+
 
 
 ## Simple explanations about the process:
