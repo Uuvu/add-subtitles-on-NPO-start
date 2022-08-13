@@ -9,14 +9,14 @@
 // @grant        none
 // ==/UserScript==
 
-
-
 window.addEventListener('load', function () {
     // console.log("tampermonkey loaded")
 
     // Script for the main video page
     if (document.URL.includes("npostart.nl")) {
         if (window.top === window.self) {
+
+
 
             // only add the button /shortcut on the video pages
             var topMenu = document.getElementsByClassName("npo-menu")
@@ -46,16 +46,16 @@ window.addEventListener('load', function () {
             // add a textarea to retrieve the translated subtitles
             var divM = document.createElement("div");
             divM.innerHTML = `
-                    <textarea id="vttTextAreaEN" placeholder="Paste English subs and press Enter" style="position: absolute; top: 0px; left: 0px; width: 200px; height: 80%; border: none; z-index: 99;></textarea>
-                    <!--textarea id="vttTextAreaNL" placeholder="NL subs"></textarea>-->
-                    `
+                      <textarea id="vttTextAreaEN" placeholder="Paste English subs and press Enter" style="position: absolute; top: 0px; left: 0px; width: 200px; height: 80%; border: none; z-index: 99;></textarea>
+                      <!--textarea id="vttTextAreaNL" placeholder="NL subs"></textarea>-->
+                      `
             document.body.appendChild(divM);
 
             // retrieve previous translated subtitles and add them to the textarea
             var textarea = document.getElementById("vttTextAreaEN")
 
 
-            var url1000 = document.URL.substring(0, 1000);
+            var url1000 = document.URL.substring(230, 1000);
             textarea.value = localStorage.getItem(url1000)
 
 
@@ -64,16 +64,16 @@ window.addEventListener('load', function () {
 
             // ● optional: this will remove the dark overlay that makes it difficult to read the subtitles when on pause/send shortcut + it move the volume button to the right side. This block can be commented out.
             var styles = `
-                    /* remove dark overlay*/
-                    .video-js:before{
-                        background: #f5f0f000;
-                    }
-                    /* move volume button to the right side */
-                    .video-js .vjs-volume-panel.vjs-volume-panel-vertical {
-                        position: relative;
-                       left: 60px;
-                    }
-                 `
+                      /* remove dark overlay*/
+                      .video-js:before{
+                          background: #f5f0f000;
+                      }
+                      /* move volume button to the right side */
+                      .video-js .vjs-volume-panel.vjs-volume-panel-vertical {
+                          position: relative;
+                         left: 60px;
+                      }
+                   `
             var styleSheet = document.createElement("style")
             styleSheet.innerText = styles
             document.head.appendChild(styleSheet)
@@ -95,11 +95,11 @@ window.addEventListener('load', function () {
 
                     // modify the position of the subtitles (the size parameter doesn't work, it's modified via css cf below)
                     // vttTranslatedEn = vttTranslatedEn.replaceAll("line:90% position:50% align:middle", "line:10% position:20% align:left"); // ● replace "line:10% position:20% align:left" by whatever you want
-                    vttTranslatedEn = vttTranslatedEn.replaceAll( /line:\d+% position:\d+% align:middle/g, "line:10% position:20% align:left"); // ● replace "line:10% position:20% align:left" by whatever you want
+                    vttTranslatedEn = vttTranslatedEn.replaceAll(/line:\d+% position:\d+% align:middle/g, "line:10% position:20% align:left"); // ● replace "line:10% position:20% align:left" by whatever you want
 
 
                     // save the translated subtitles in the local storage
-                    var url1000 = document.URL.substring(0, 1000);
+                    var url1000 = document.URL.substring(230, 1000);
                     localStorage.setItem(url1000, vttTranslatedEn);
 
 
@@ -114,10 +114,10 @@ window.addEventListener('load', function () {
 
                     // change the size of the text   ●
                     var styles = `
-                        video::-webkit-media-text-track-display {
-                        font-size: 50%;
-                        }
-                      `
+                          video::-webkit-media-text-track-display {
+                          font-size: 50%;
+                          }
+                        `
                     var styleSheet = document.createElement("style")
                     styleSheet.innerText = styles
                     document.head.appendChild(styleSheet)
@@ -142,20 +142,20 @@ window.addEventListener('load', function () {
                         if (key.altKey && key.code === "KeyL") { //  ●  to find the key name : https://keyjs.dev/
                             if (displayState) {
                                 var stylesA = `
-                            video::-webkit-media-text-track-display {
-                             display: none;
-                             }
-                            `
+                              video::-webkit-media-text-track-display {
+                               display: none;
+                               }
+                              `
                                 var styleSheetA = document.createElement("style")
                                 styleSheetA.innerText = stylesA
                                 document.head.appendChild(styleSheetA)
                                 displayState = 0
                             } else {
                                 var stylesB = `
-                           video::-webkit-media-text-track-display {
-                           display: block;
-                           }
-                         `
+                             video::-webkit-media-text-track-display {
+                             display: block;
+                             }
+                           `
                                 var styleSheetB = document.createElement("style")
                                 styleSheetB.innerText = stylesB
                                 document.head.appendChild(styleSheetB)
@@ -304,21 +304,21 @@ function getCaptionAndOpenVideoPayer() {
     fetch(urlVTT)
         .then(response => response.text())
         .then(vttContent => {
-        vttContentM = vttContent
-        document.addEventListener("copy", sendTextToClipboard);
-        document.execCommand("copy");
-        document.removeEventListener("copy", sendTextToClipboard);
+            vttContentM = vttContent
+            document.addEventListener("copy", sendTextToClipboard);
+            document.execCommand("copy");
+            document.removeEventListener("copy", sendTextToClipboard);
 
-        // translateSubtitles(vttContentM)
-        // var translated = translateSubtitles(vttContentM)
-        // console.log(translated)
+            // translateSubtitles(vttContentM)
+            // var translated = translateSubtitles(vttContentM)
+            // console.log(translated)
 
 
-        // get the link of the real video player (the main page calls an iframe) and open it
-        var urlIframe = document.getElementsByTagName("iframe")[0].src
-        console.log(urlIframe)
-        window.open(urlIframe, '_blank').focus();
-    })
+            // get the link of the real video player (the main page calls an iframe) and open it
+            var urlIframe = document.getElementsByTagName("iframe")[0].src
+            console.log(urlIframe)
+            window.open(urlIframe, '_blank').focus();
+        })
         .catch(() => alert('problem!'));
 
 
