@@ -278,7 +278,7 @@ window.addEventListener('load', function () {
 function getCaptionAndOpenVideoPayer() {
 
     // Retrieve the epidoseID and assemble the link of thecaption VTT file
-    var epidoseID = document.URL.split("/").pop().replace("?st=premium","")
+    var epidoseID = document.URL.split("/").pop().split("?")[0]
     var urlVTT = "https://assetscdn.npostart.nl/subtitles/original/nl/" + epidoseID + ".vtt"
 
     /******************** ● Option1: copy the content of the subtitle in the clipboard and open the video player ********************/
