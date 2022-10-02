@@ -16,8 +16,6 @@ window.addEventListener('load', function () {
     if (document.URL.includes("npostart.nl")) {
         if (window.top === window.self) {
 
-
-
             // only add the button /shortcut on the video pages
             var topMenu = document.getElementsByClassName("npo-menu")
             if (topMenu.length == 0) {
@@ -27,6 +25,7 @@ window.addEventListener('load', function () {
                 button.style.position = "absolute";
                 button.style.top = "0px";
                 button.style.left = "0px";
+                button.style.zIndex  = "9999";
                 document.body.appendChild(button);
 
                 // add  event shorctut on the main page (but doesn't work for the iframe)
@@ -38,7 +37,6 @@ window.addEventListener('load', function () {
                 }, true);
             }
         } // end if window.top === window.self
-
 
         // script for the video player page
     } else if (document.URL.includes("start-player.npo.nl/embed")) {
@@ -54,10 +52,8 @@ window.addEventListener('load', function () {
             // retrieve previous translated subtitles and add them to the textarea
             var textarea = document.getElementById("vttTextAreaEN")
 
-
             var url1000 = document.URL.substring(230, 1000);
             textarea.value = localStorage.getItem(url1000)
-
 
             // add focus to textarea
             textarea.focus()
@@ -97,11 +93,9 @@ window.addEventListener('load', function () {
                     // vttTranslatedEn = vttTranslatedEn.replaceAll("line:90% position:50% align:middle", "line:10% position:20% align:left"); // ● replace "line:10% position:20% align:left" by whatever you want
                     vttTranslatedEn = vttTranslatedEn.replaceAll(/line:\d+% position:\d+% align:middle/g, "line:10% position:20% align:left"); // ● replace "line:10% position:20% align:left" by whatever you want
 
-
                     // save the translated subtitles in the local storage
                     var url1000 = document.URL.substring(230, 1000);
                     localStorage.setItem(url1000, vttTranslatedEn);
-
 
                     // add the translated subtitles to the player
                     const type = 'text/plain'
@@ -121,7 +115,6 @@ window.addEventListener('load', function () {
                     var styleSheet = document.createElement("style")
                     styleSheet.innerText = styles
                     document.head.appendChild(styleSheet)
-
 
                     // add a shorcut to toggle the display of the translated subtitles
                     // there is probably a better way to do this than with a "memory variable"
@@ -164,7 +157,6 @@ window.addEventListener('load', function () {
                         }
                     }
 
-
                     /******************** ● option 2: add translated subtitles to the player via player.addRemoteTextTrack: ********************/
                     // pro: the translated subtitles appears in the player setting
                     // cons: couldn't find a way to make the captions and translated subtitles display simultaneously (also it should be possible)
@@ -192,7 +184,6 @@ window.addEventListener('load', function () {
                     //     track.mode = 'showing';
                     //   }
                     // }
-
 
                     /******************** ● Still in development:  ********************/
                     // Trying to make translated subtitles added via player.addRemoteTextTrack appear simultaneously with the original caption
@@ -228,14 +219,12 @@ window.addEventListener('load', function () {
                     // player.textTracks()[1].mode = 'disabled';
                     // player.textTracks()[1].mode = 'showing';
 
-
                 } // end of "enter" event
             }); // end of dispatch event
 
         } // if window.top
     } // end if url
 })
-
 
 // // trying to translate directly the subtitles without using VSCode Subtitle Editor
 // function translateSubtitles(text) {
@@ -275,7 +264,6 @@ window.addEventListener('load', function () {
 
 //     urlAss = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" + encodeURIComponent('en') + "&dt=t&q=" + encodeURIComponent(textA)
 
-
 //     fetch(urlAss).then(function (response) {
 //       return response.json();
 //     }).then(function (data) {
@@ -284,15 +272,13 @@ window.addEventListener('load', function () {
 //       console.log('Booo');
 //     });
 
-
 //   });
 // }
-
 
 function getCaptionAndOpenVideoPayer() {
 
     // Retrieve the epidoseID and assemble the link of thecaption VTT file
-    var epidoseID = document.URL.split("/").pop()
+    var epidoseID = document.URL.split("/").pop().replace("?st=premium","")
     var urlVTT = "https://assetscdn.npostart.nl/subtitles/original/nl/" + epidoseID + ".vtt"
 
     /******************** ● Option1: copy the content of the subtitle in the clipboard and open the video player ********************/
@@ -313,14 +299,12 @@ function getCaptionAndOpenVideoPayer() {
             // var translated = translateSubtitles(vttContentM)
             // console.log(translated)
 
-
             // get the link of the real video player (the main page calls an iframe) and open it
             var urlIframe = document.getElementsByTagName("iframe")[0].src
             console.log(urlIframe)
             window.open(urlIframe, '_blank').focus();
         })
         .catch(() => alert('problem!'));
-
 
     /******************** ● Option 2: save the subtitle file and open the video player ********************/
     // fetch(urlVTT)
@@ -342,6 +326,5 @@ function getCaptionAndOpenVideoPayer() {
     //     window.open(urlIframe, '_blank').focus();
     //   })
     //   .catch(() => alert('problem!'));
-
 
 }
