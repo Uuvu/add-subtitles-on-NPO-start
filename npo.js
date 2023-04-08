@@ -277,27 +277,38 @@ window.addEventListener('load', function () {
 
 function getCaptionAndOpenVideoPayer() {
 
-    // Retrieve the epidoseID and assemble the link of thecaption VTT file
+    // Retrieve the epidoseID and make the link of the caption VTT file
     var epidoseID = document.URL.split("/").pop().split("?")[0]
     var urlVTT = "https://assetscdn.npostart.nl/subtitles/original/nl/" + epidoseID + ".vtt"
 
     /******************** ● Option1: copy the content of the subtitle in the clipboard and open the video player ********************/
-    function sendTextToClipboard(e) {
-        e.clipboardData.setData("text/plain", vttContentM);
-        e.preventDefault();
-    }
+    // function sendTextToClipboard(e) {
+    //     e.clipboardData.setData("text/plain", vttContentM);
+    //     e.preventDefault();
+    // }
+  async function sendTextToClipboard() {
+  try {
+    await navigator.clipboard.writeText(vttContentM);
+    console.log('Content copied to clipboard');
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+  }
+}
+
     var vttContentM = ""
     fetch(urlVTT)
         .then(response => response.text())
         .then(vttContent => {
             vttContentM = vttContent
-            document.addEventListener("copy", sendTextToClipboard);
-            document.execCommand("copy");
-            document.removeEventListener("copy", sendTextToClipboard);
+      sendTextToClipboard()
+            // document.addEventListener("copy", sendTextToClipboard);
+            // document.execCommand("copy");
+            // document.removeEventListener("copy", sendTextToClipboard);
 
             // translateSubtitles(vttContentM)
             // var translated = translateSubtitles(vttContentM)
             // console.log(translated)
+
 
             // get the link of the real video player (the main page calls an iframe) and open it
             var urlIframe = document.getElementsByTagName("iframe")[0].src
