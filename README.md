@@ -16,7 +16,11 @@ In your userscript manager, save [this script](https://github.com/Uuvu/add-subti
 2) Click on the button in the top left corner*. This will:
 - copy the Dutch captions in your clipboard
 - open a new page with the same video (this is the real video player, the previous page embeds this player in an iframe) 
-![2](https://user-images.githubusercontent.com/101060119/158232729-ef584d10-84ff-4b7f-a934-43c62b2fa26b.png)
+![2](https://user-images.githubusercontent.com/101060119/158232729-ef584d10-84ff-4b7f-a934-43c62b2fa26b.png) 
+
+⚠ If you are using this for the first time, you may need to come back to the tab open in step 1 and allow the clipboard permission:
+![image](https://user-images.githubusercontent.com/101060119/230739808-1a989272-4a8c-4032-b580-4e4d3183f182.png)
+
 
 3) Paste the content of the clipboard in a new file in Open Visual Studio Code and translate them with Subtitle Editor (open the command palette: view>command palette, type "sub" and select "Subtitles:Translates", then enter the language you want to translate you subtitles in ex "EN", then press enter), then copy the translated subtitles.
 
