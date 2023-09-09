@@ -60,19 +60,21 @@ window.addEventListener('load', function () {
 
             // ● optional: this will remove the dark overlay that makes it difficult to read the subtitles when on pause/send shortcut + it move the volume button to the right side. This block can be commented out.
             var styles = `
-                      /* remove dark overlay*/
-                      .video-js:before{
-                          background: #f5f0f000;
-                      }
-                      /* move volume button to the right side */
-                      .video-js .vjs-volume-panel.vjs-volume-panel-vertical {
-                          position: relative;
-                         left: 60px;
-                      }
-                   `
-            var styleSheet = document.createElement("style")
-            styleSheet.innerText = styles
-            document.head.appendChild(styleSheet)
+                    video::-webkit-media-text-track-display {
+            bottom: 50px !important;
+            top: auto !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            text-align: center !important;
+            font-size: 1.2em !important;
+            color: white !important;
+            background-color: rgba(0, 0, 0, 0.6) !important; /* Optional: Adds a semi-transparent background to the subtitles for better readability */
+        }
+            `;
+            var styleSheet = document.createElement("style");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+
             // ● comment until here if you wan to keep the dark overlay and the volume button on the left side
 
             // add event when press Enter on the textarea
