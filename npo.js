@@ -276,66 +276,41 @@ window.addEventListener('load', function () {
 // }
 
 function getCaptionAndOpenVideoPayer() {
+    var episodeID = document.URL.split("/").pop().split("?")[0];
+    var urlVTT = "https://assetscdn.npostart.nl/subtitles/original/nl/" + episodeID + ".vtt";
 
-    // Retrieve the epidoseID and make the link of the caption VTT file
-    var epidoseID = document.URL.split("/").pop().split("?")[0]
-    var urlVTT = "https://assetscdn.npostart.nl/subtitles/original/nl/" + epidoseID + ".vtt"
-
-    /******************** ● Option1: copy the content of the subtitle in the clipboard and open the video player ********************/
-    // function sendTextToClipboard(e) {
-    //     e.clipboardData.setData("text/plain", vttContentM);
-    //     e.preventDefault();
-    // }
-  async function sendTextToClipboard() {
-  try {
-    await navigator.clipboard.writeText(vttContentM);
-    console.log('Content copied to clipboard');
-  } catch (err) {
-    console.error('Failed to copy: ', err);
-  }
-}
-
-    var vttContentM = ""
+    var vttContentM = "";
     fetch(urlVTT)
         .then(response => response.text())
         .then(vttContent => {
-            vttContentM = vttContent
-      sendTextToClipboard()
-            // document.addEventListener("copy", sendTextToClipboard);
-            // document.execCommand("copy");
-            // document.removeEventListener("copy", sendTextToClipboard);
+            vttContentM = vttContent;
 
-            // translateSubtitles(vttContentM)
-            // var translated = translateSubtitles(vttContentM)
-            // console.log(translated)
+            var button = document.createElement('button');
+            button.textContent = 'Copy to Clipboard';
+            button.style.position = 'fixed';
+            button.style.top = '50px';
+            button.style.left = '10px';
+            button.style.zIndex = '9999';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(vttContentM).then(() => {
+                    console.log('Content copied to clipboard');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+            document.body.appendChild(button);
 
-
-            // get the link of the real video player (the main page calls an iframe) and open it
-            var urlIframe = document.getElementsByTagName("iframe")[0].src
-            console.log(urlIframe)
-            window.open(urlIframe, '_blank').focus();
+            var buttonOpenNewTab = document.createElement('button');
+            buttonOpenNewTab.textContent = 'Open Video in New Tab';
+            buttonOpenNewTab.style.position = 'fixed';
+            buttonOpenNewTab.style.top = '90px';
+            buttonOpenNewTab.style.left = '10px';
+            buttonOpenNewTab.style.zIndex = '9999';
+            buttonOpenNewTab.addEventListener('click', () => {
+                var urlIframe = document.getElementsByTagName("iframe")[0].src;
+                window.open(urlIframe, '_blank').focus();
+            });
+            document.body.appendChild(buttonOpenNewTab);
         })
         .catch(() => alert('problem!'));
-
-    /******************** ● Option 2: save the subtitle file and open the video player ********************/
-    // fetch(urlVTT)
-    //   .then(resp => resp.blob())
-    //   .then(blob => {
-    //     const url = window.URL.createObjectURL(blob);
-    //     const a = document.createElement('a');
-    //     a.style.display = 'none';
-    //     a.href = url;
-
-    //     // the filename you want
-    //     a.download = 'npo_' + epidoseID + '.vtt';
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     window.URL.revokeObjectURL(url);
-
-    //     // get the link of the real video player (the main page calls an iframe) and open it
-    //     var urlIframe = document.getElementsByTagName("iframe")[0].src
-    //     window.open(urlIframe, '_blank').focus();
-    //   })
-    //   .catch(() => alert('problem!'));
-
 }
